@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Registration</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Student Registration</h1>
+
+    <form id="regForm">
+      <label>
+        Name
+        <input type="text" name="name" id="name" required />
+      </label>
+
+      <label>
+        Email
+        <input type="email" name="email" id="email" required />
+      </label>
+
+      <label>
+        Course
+        <input type="text" name="course" id="course" />
+      </label>
+
+      <label>
+        Roll No.
+        <input type="text" name="roll" id="roll" />
+      </label>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <div id="msg"></div>
+
+    <p><a href="/students.html">View registered students</a></p>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>
