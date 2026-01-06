@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app         # Add this volume for live code changes (optional but recommended)
+    environment:
+      - NODE_ENV=development   # Add this environment variable (optional but recommended)
+      - MONGO_URL=mongodb://mongo:27017/student-registration  # Fixed to match server.js
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest        # Changed image to 'latest' to align with experiment (optional)
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+  prometheus: # <<< ADD THIS SERVICE
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro # You need a prometheus.yml file in your project folder
+    ports:
+      - "9095:9090"
+    networks:
+      - app-network
+
+  grafana: # <<< ADD THIS SERVICE
+    image: grafana/grafana:10.0.3
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3001:3000"
+    networks:
+      - app-network
+    depends_on:
+      - prometheus
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8085:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - app-network
+
+volumes:
+  mongo_data: # <<< Keep this volume
+  # mongodb_data: # If you used this name in the original experiment, use it here instead of mongo_data
+
+networks: # <<< ADD THIS NETWORK DEFINITION
+  app-network:

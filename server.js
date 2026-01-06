@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 // Read env vars
-const PORT = process.env.PORT || 36000;
-const MONGO_URL = "mongodb+srv://student:student123@cluster0.htcnzfq.mongodb.net/studentDB?retryWrites=true&w=majority&appName=Cluster0";
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:3000/studentDB";
 
 
 const app = express();
